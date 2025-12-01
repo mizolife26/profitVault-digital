@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfitVault Digital | Interactive Platform Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFCF8; /* Warm neutral cream */
+            color: #1A1A1A;
+        }
+
+        .gold-accent {
+            color: #C5A059;
+        }
+        
+        .gold-border {
+            border-color: #C5A059;
+        }
+
+        .bg-gold {
+            background-color: #C5A059;
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #C5A059;
+            font-weight: 600;
+        }
+
+        /* CHART CONTAINER STYLES - STRICT ADHERENCE */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Constraint for large screens */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Base height */
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Custom Scrollbar for inner content */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF; 
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals (Cream/Off-White #FDFCF8) with Dark Charcoal (#1A1A1A) text and Metallic Gold (#C5A059) accents for a premium, trustworthy "Vault" aesthetic. -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Uses the core_messaging.md headline/tagline to set the stage.
+         2. "The Architecture of Income" (Interactive Grid): Represents the 8 Core Platform Features. Clicking a feature reveals details, replacing a central content area. Purpose: Quick high-level exploration of the system's capabilities.
+         3. "Admin Command Center" (Simulation): A Chart.js visualization demonstrating the "Advanced Admin Dashboard" feature. Users can toggle timeframes (Day/Week/Month) to see simulated sales analytics. Purpose: Show, don't just tell, the power of the backend.
+         4. "Marketplace Categories" (Filterable Gallery): Displays the product types (AI, Dropshipping, etc.) with interaction to filter by category. Purpose: Showcase the breadth of the catalog.
+         5. "Enterprise Security" (Process Flow): A visual, step-by-step breakdown of the secure transaction process.
+    -->
+    <!-- Visualization & Content Choices: 
+         1. Admin Dashboard Sim (Line Chart): Goal -> Demonstrate "Real-time sales analytics". Interaction -> Timeframe toggles update data. Justification -> A line chart is the industry standard for tracking sales over time.
+         2. Marketplace Category Distribution (Doughnut Chart): Goal -> Visualize the diversity of the catalog. Interaction -> Hover for details. Justification -> Shows the "Wide selection" mentioned in the report proportionally.
+         3. Feature Grid: Goal -> Organize the 8 distinct platform features. Interaction -> Click to expand details. Justification -> Cleanest way to present a list of complex features without overwhelming text.
+         4. Security Flow (Styled HTML Steps): Goal -> Explain "Enterprise-Level Security". Interaction -> Hover to highlight steps. Justification -> Linear process flow is best for transaction security explanation.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. 
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gray-900 flex items-center justify-center rounded-sm">
+                        <span class="text-white font-bold text-lg">P</span>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">ProfitVault <span class="text-gray-400 font-light">Digital</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('hero')" class="text-gray-600 hover:text-black transition-colors">Home</button>
+                    <button onclick="scrollToSection('features')" class="text-gray-600 hover:text-black transition-colors">Core Features</button>
+                    <button onclick="scrollToSection('dashboard')" class="text-gray-600 hover:text-black transition-colors">Admin Demo</button>
+                    <button onclick="scrollToSection('marketplace')" class="text-gray-600 hover:text-black transition-colors">Marketplace</button>
+                </div>
+                <button class="bg-gray-900 text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-gray-800 transition-colors">
+                    Access Vault
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-100 mb-6">
+            <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+            <span class="text-xs font-semibold uppercase tracking-wide text-yellow-800">Secure • Scalable • Premium</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+            The Vault of Verified Income: <br>
+            <span class="gold-accent">Elite Digital Blueprints</span> for the Modern Economy.
+        </h1>
+        <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Stop Searching. Start Earning. Instantly download expertly crafted courses, AI tools, and growth systems secured by enterprise-level protection.
+        </p>
+        <div class="mt-10 flex justify-center gap-4">
+            <button onclick="scrollToSection('marketplace')" class="bg-gray-900 text-white px-8 py-3 rounded-md font-medium text-lg hover:bg-gray-800 transition-shadow shadow-lg shadow-gray-200">
+                Explore The Vault
+            </button>
+            <button onclick="scrollToSection('dashboard')" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-md font-medium text-lg hover:bg-gray-50 transition-colors">
+                View Tech Specs
+            </button>
+        </div>
+    </section>
+
+    <!-- Core Features Interactive Grid -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-gray-900">Platform Architecture</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">
+                    Explore the 8 pillars that make ProfitVault Digital a secure and scalable ecosystem. Click any card to reveal technical details.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Feature Selector -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <!-- Buttons generated by JS -->
+                    <div id="feature-buttons-container" class="contents">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Feature Detail View -->
+                <div class="lg:col-span-7 bg-white rounded-xl p-8 border border-gray-200 shadow-sm flex flex-col justify-center min-h-[400px] relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i id="detail-icon-bg" class="fas fa-layer-group text-9xl"></i>
+                    </div>
+                    <div id="feature-detail-content" class="relative z-10">
+                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-6 text-2xl text-gray-800">
+                            <i id="detail-icon" class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 id="detail-title" class="text-2xl font-bold text-gray-900 mb-4">Select a Feature</h3>
+                        <p id="detail-desc" class="text-gray-600 text-lg leading-relaxed mb-6">Click on any of the architecture blocks to the left to see deep-dive specifications about the ProfitVault system.</p>
+                        <ul id="detail-list" class="space-y-3">
+                            <!-- List items populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Simulator -->
+    <section id="dashboard" class="py-16 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="order-2 lg:order-1">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Advanced Admin Command Center</h2>
+                    <p class="text-gray-600 mb-6">
+                        As the platform owner, you possess a powerful back-office system. This isn't just a store; it's a data-driven business engine.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-50 flex items-center justify-center mt-1">
+                                <i class="fas fa-chart-line text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">Real-Time Analytics</h4>
+                                <p class="text-sm text-gray-500">Track user activity, sales velocity, and conversion rates instantly.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mt-1">
+                                <i class="fas fa-users-cog text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">User Management</h4>
+                                <p class="text-sm text-gray-500">Manage personalized dashboards, purchase histories, and access rights.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center mt-1">
+                                <i class="fas fa-bullhorn text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">Marketing Suite</h4>
+                                <p class="text-sm text-gray-500">Built-in email automation, discount codes, and SEO tools.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Controls -->
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <p class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Simulate Admin View</p>
+                        <div class="flex gap-2">
+                            <button onclick="updateChart('week')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm font-medium transition-colors">7 Days</button>
+                            <button onclick="updateChart('month')" class="px-4 py-2 bg-white border border-gray-200 hover:border-gray-400 text-gray-700 rounded text-sm font-medium transition-colors">30 Days</button>
+                            <button onclick="updateChart('quarter')" class="px-4 py-2 bg-white border border-gray-200 hover:border-gray-400 text-gray-700 rounded text-sm font-medium transition-colors">Quarter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization -->
+                <div class="order-1 lg:order-2 bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-inner">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-gray-700">Live Sales Overview</h3>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full animate-pulse"></span> Live
+                        </span>
+                    </div>
+                    
+                    <!-- Chart Container Wrapper -->
+                    <div class="chart-container">
+                        <canvas id="adminChart"></canvas>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mt-6">
+                        <div class="text-center p-3 bg-white rounded shadow-sm border border-gray-100">
+                            <div class="text-xs text-gray-400 uppercase">Revenue</div>
+                            <div class="text-lg font-bold text-gray-900">$12,450</div>
+                        </div>
+                        <div class="text-center p-3 bg-white rounded shadow-sm border border-gray-100">
+                            <div class="text-xs text-gray-400 uppercase">Orders</div>
+                            <div class="text-lg font-bold text-gray-900">142</div>
+                        </div>
+                        <div class="text-center p-3 bg-white rounded shadow-sm border border-gray-100">
+                            <div class="text-xs text-gray-400 uppercase">Conv. Rate</div>
+                            <div class="text-lg font-bold text-gray-900">4.2%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Catalogue Filter -->
+    <section id="marketplace" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900">The Digital Marketplace</h2>
+                <p class="mt-2 text-gray-600">A structured catalog of income-focused assets. Filter by category to explore the inventory types.</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8" id="category-filters">
+                <button onclick="filterProducts('all')" class="filter-btn active px-5 py-2 rounded-full text-sm font-medium transition-all bg-gray-900 text-white shadow-md">All Assets</button>
+                <button onclick="filterProducts('ai')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 hover:bg-gray-100 border border-gray-200">AI Blueprints</button>
+                <button onclick="filterProducts('dropshipping')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 hover:bg-gray-100 border border-gray-200">Dropshipping</button>
+                <button onclick="filterProducts('passive')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 hover:bg-gray-100 border border-gray-200">Passive Income</button>
+                <button onclick="filterProducts('tools')" class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 hover:bg-gray-100 border border-gray-200">Tools & Templates</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via JS -->
+            </div>
+            
+            <!-- Category Distribution Visual -->
+            <div class="mt-16 bg-white p-8 rounded-xl border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container" style="height: 250px; max-height: 250px;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Balanced Asset Ecosystem</h3>
+                        <p class="text-gray-600 mb-4">
+                            The marketplace is designed to offer a holistic range of income-generation tools. From strategic frameworks to tactical automation scripts, the inventory is diversified to meet modern demand.
+                        </p>
+                        <ul class="text-sm space-y-2 text-gray-500">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Instant Digital Delivery</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Lifetime Access</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Secure Download Links</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security & Trust Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Enterprise-Level Security</h2>
+            
+            <!-- Security Flow -->
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-100 z-0"></div>
+                
+                <div class="relative z-10 space-y-8">
+                    <!-- Step 1 -->
+                    <div class="flex items-center justify-between w-full group cursor-default">
+                        <div class="w-5/12 text-right pr-8">
+                            <h4 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors">Encrypted Data Storage</h4>
+                            <p class="text-sm text-gray-500 mt-1">User data and product files are protected using advanced encryption protocols in the database.</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-white border-2 border-gray-300 group-hover:border-blue-500 flex items-center justify-center transition-colors">
+                            <i class="fas fa-database text-gray-400 group-hover:text-blue-500"></i>
+                        </div>
+                        <div class="w-5/12 pl-8 opacity-0"></div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex items-center justify-between w-full group cursor-default">
+                        <div class="w-5/12 opacity-0"></div>
+                        <div class="w-10 h-10 rounded-full bg-white border-2 border-gray-300 group-hover:border-green-500 flex items-center justify-center transition-colors">
+                            <i class="fas fa-lock text-gray-400 group-hover:text-green-500"></i>
+                        </div>
+                        <div class="w-5/12 pl-8">
+                            <h4 class="font-bold text-gray-900 text-lg group-hover:text-green-600 transition-colors">Secure Payment Gateways</h4>
+                            <p class="text-sm text-gray-500 mt-1">Stripe & PayPal integration ensures anti-fraud processing for global transactions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex items-center justify-between w-full group cursor-default">
+                        <div class="w-5/12 text-right pr-8">
+                            <h4 class="font-bold text-gray-900 text-lg group-hover:text-purple-600 transition-colors">Protected Delivery</h4>
+                            <p class="text-sm text-gray-500 mt-1">Secure, unique download links are generated instantly post-purchase.</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-white border-2 border-gray-300 group-hover:border-purple-500 flex items-center justify-center transition-colors">
+                            <i class="fas fa-file-download text-gray-400 group-hover:text-purple-500"></i>
+                        </div>
+                        <div class="w-5/12 pl-8 opacity-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <span class="font-bold text-xl tracking-tight">ProfitVault <span class="text-gray-500">Digital</span></span>
+                <p class="text-gray-400 text-sm mt-2 max-w-xs">Empowering individuals with high-quality digital resources for financial independence.</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-white transition-colors">Support</a>
+            </div>
+        </div>
+        <div class="text-center text-gray-600 text-xs mt-8">
+            © 2025 ProfitVault Digital. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA STORE ---
+        
+        // Feature Data
+        const features = [
+            {
+                id: 'marketplace',
+                icon: 'fa-store',
+                title: 'Digital Product Marketplace',
+                desc: 'A fully structured catalog containing AI blueprints, guides, and toolkits. Designed for intuitive browsing and high conversion.',
+                points: ['Detailed Previews', 'Customer Reviews', 'Instant Downloads', 'Lifetime Access']
+            },
+            {
+                id: 'accounts',
+                icon: 'fa-user-shield',
+                title: 'Secure User Dashboards',
+                desc: 'Personalized, encrypted environments where users can manage their digital assets and purchase history safely.',
+                points: ['Saved Products', 'Purchase History', 'Wishlist Functionality', 'Account Settings']
+            },
+            {
+                id: 'payments',
+                icon: 'fa-credit-card',
+                title: 'Integrated Payments',
+                desc: 'Seamless, encrypted transaction processing supporting multiple global gateways for maximum accessibility.',
+                points: ['Credit & Debit Cards', 'PayPal & Stripe', 'Auto-Verification', 'Global Transactions']
+            },
+            {
+                id: 'delivery',
+                icon: 'fa-bolt',
+                title: 'Instant Digital Delivery',
+                desc: 'Automated fulfillment system ensuring zero wait times. Users get immediate access upon successful payment.',
+                points: ['Secure Download Links', 'Permanent Dashboard Access', 'No Manual Processing', 'Enhanced UX']
+            },
+            {
+                id: 'admin',
+                icon: 'fa-chart-pie',
+                title: 'Advanced Admin Dashboard',
+                desc: 'A powerful command center for the platform owner to manage inventory, analyze sales, and control marketing.',
+                points: ['Real-time Sales Analytics', 'Product Management', 'User Tracking', 'Support Management']
+            },
+            {
+                id: 'uiux',
+                icon: 'fa-mobile-alt',
+                title: 'Modern Responsive UI/UX',
+                desc: 'Sleek, minimalist design optimized for all devices, following industry standards for readability and conversion.',
+                points: ['Mobile Optimized', 'Desktop & Tablet Ready', 'Minimalistic Design', 'High Performance']
+            },
+            {
+                id: 'marketing',
+                icon: 'fa-rocket',
+                title: 'Built-In Marketing Tools',
+                desc: 'Native tools designed to scale the business, capture leads, and retain customers without external software.',
+                points: ['Email Automation', 'SEO Optimization', 'Discount Codes', 'Affiliate System']
+            },
+            {
+                id: 'security',
+                icon: 'fa-shield-alt',
+                title: 'Enterprise-Level Security',
+                desc: 'Comprehensive protection layers safeguarding both user data and intellectual property.',
+                points: ['SSL Encryption', 'Secure Databases', 'Anti-fraud Processing', 'Automated Backups']
+            }
+        ];
+
+        // Mock Product Data
+        const products = [
+            { id: 1, type: 'ai', title: 'AI Business Blueprint v2.0', price: '$49.99', image: 'fa-robot' },
+            { id: 2, type: 'dropshipping', title: 'Global Dropshipping Guide', price: '$29.99', image: 'fa-shipping-fast' },
+            { id: 3, type: 'passive', title: 'Passive Income Systems', price: '$39.99', image: 'fa-seedling' },
+            { id: 4, type: 'tools', title: 'Freelancer Toolkit Pro', price: '$19.99', image: 'fa-tools' },
+            { id: 5, type: 'ai', title: 'Generative AI Masterclass', price: '$99.99', image: 'fa-brain' },
+            { id: 6, type: 'dropshipping', title: 'E-commerce Templates Pack', price: '$24.99', image: 'fa-store-alt' },
+        ];
+
+        // --- DOM ELEMENTS ---
+        const featureContainer = document.getElementById('feature-buttons-container');
+        const detailTitle = document.getElementById('detail-title');
+        const detailDesc = document.getElementById('detail-desc');
+        const detailList = document.getElementById('detail-list');
+        const detailIcon = document.getElementById('detail-icon');
+        const detailIconBg = document.getElementById('detail-icon-bg');
+        const productGrid = document.getElementById('product-grid');
+
+        // --- INITIALIZATION ---
+
+        function init() {
+            renderFeatures();
+            selectFeature(0); // Select first feature by default
+            renderProducts('all');
+            initCharts();
+        }
+
+        // --- FEATURE SECTION LOGIC ---
+
+        function renderFeatures() {
+            featureContainer.innerHTML = features.map((f, index) => `
+                <button onclick="selectFeature(${index})" class="feature-btn flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-lg hover:border-yellow-400 hover:shadow-md transition-all text-center group h-32">
+                    <i class="fas ${f.icon} text-2xl text-gray-400 group-hover:text-yellow-600 mb-2 transition-colors"></i>
+                    <span class="text-xs font-bold text-gray-700 group-hover:text-black">${f.title}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectFeature(index) {
+            const f = features[index];
+            
+            // Update Text
+            detailTitle.textContent = f.title;
+            detailDesc.textContent = f.desc;
+            
+            // Update List
+            detailList.innerHTML = f.points.map(p => `
+                <li class="flex items-center text-gray-700">
+                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                    ${p}
+                </li>
+            `).join('');
+
+            // Update Icons
+            detailIcon.className = `fas ${f.icon}`;
+            detailIconBg.className = `fas ${f.icon} text-9xl`;
+
+            // Update Buttons State
+            const buttons = document.querySelectorAll('.feature-btn');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('border-yellow-500', 'ring-1', 'ring-yellow-500', 'bg-yellow-50');
+                    btn.classList.remove('border-gray-200', 'bg-white');
+                } else {
+                    btn.classList.remove('border-yellow-500', 'ring-1', 'ring-yellow-500', 'bg-yellow-50');
+                    btn.classList.add('border-gray-200', 'bg-white');
+                }
+            });
+        }
+
+        // --- PRODUCT MARKETPLACE LOGIC ---
+
+        function renderProducts(filter) {
+            const filtered = filter === 'all' ? products : products.filter(p => p.type === filter);
+            
+            productGrid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-lg transition-shadow p-5 flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-gray-900 transition-colors">
+                        <i class="fas ${p.image} text-2xl text-gray-400 group-hover:text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-1">${p.title}</h4>
+                    <p class="text-yellow-600 font-semibold mb-4">${p.price}</p>
+                    <button class="w-full mt-auto py-2 border border-gray-200 rounded text-sm text-gray-600 hover:bg-gray-900 hover:text-white transition-colors">
+                        View Details
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts(type) {
+            renderProducts(type);
+            
+            // Update Filter Buttons Styling
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if (btn.onclick.toString().includes(`'${type}'`)) {
+                    btn.classList.add('bg-gray-900', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-white', 'text-gray-600', 'hover:bg-gray-100');
+                } else {
+                    btn.classList.remove('bg-gray-900', 'text-white', 'shadow-md');
+                    btn.classList.add('bg-white', 'text-gray-600', 'hover:bg-gray-100');
+                }
+            });
+        }
+
+        // --- CHARTS LOGIC ---
+
+        let adminChartInstance = null;
+
+        function initCharts() {
+            // 1. Admin Sales Chart
+            const adminCtx = document.getElementById('adminChart').getContext('2d');
+            
+            const gradient = adminCtx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(197, 160, 89, 0.2)'); // Gold low opacity
+            gradient.addColorStop(1, 'rgba(197, 160, 89, 0)');
+
+            adminChartInstance = new Chart(adminCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Revenue ($)',
+                        data: [1200, 1900, 1500, 2200, 1800, 2800, 3100],
+                        borderColor: '#C5A059', // Gold
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#C5A059',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1A1A1A',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            displayColors: false,
+                            padding: 10,
+                            callbacks: {
+                                label: function(context) {
+                                    return '$ ' + context.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f3f4f6' },
+                            ticks: { color: '#9ca3af', callback: (value) => '$' + value }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#9ca3af' }
+                        }
+                    }
+                }
+            });
+
+            // 2. Category Distribution Doughnut Chart
+            const catCtx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(catCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AI Tools', 'Courses', 'Templates', 'Frameworks'],
+                    datasets: [{
+                        data: [35, 25, 25, 15],
+                        backgroundColor: [
+                            '#1A1A1A', // Dark
+                            '#4B5563', // Gray
+                            '#C5A059', // Gold
+                            '#E5E7EB'  // Light Gray
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- INTERACTION LOGIC ---
+
+        function updateChart(timeframe) {
+            let newData, newLabels;
+            
+            if (timeframe === 'week') {
+                newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                newData = [1200, 1900, 1500, 2200, 1800, 2800, 3100];
+            } else if (timeframe === 'month') {
+                newLabels = ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4'];
+                newData = [8500, 9200, 7800, 11000];
+            } else {
+                newLabels = ['Jan', 'Feb', 'Mar'];
+                newData = [32000, 28000, 35000];
+            }
+
+            adminChartInstance.data.labels = newLabels;
+            adminChartInstance.data.datasets[0].data = newData;
+            adminChartInstance.update();
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Start App
+        init();
+
+    </script>
+</body>
+</html>
